@@ -21,15 +21,19 @@ const KeyboardInputDetector = () => {
     const sentence: string = await GetRandomSentence();
     const oneText = sentence.split("");
     setType(oneText);
+    setCount(0);
   };
 
-  useEffect(()=> {
+  useEffect(() => {
     NextSentence();
   }, []);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       event.key == type[count] && setCount(() => count + 1);
+      if (type.length - 1 == count) {
+        NextSentence();
+      }
       setKey(event.key);
     };
 
@@ -48,18 +52,20 @@ const KeyboardInputDetector = () => {
       <MainBox className="drop-shadow-md">
         <BoxItem>
           <Timer>0秒</Timer>
-          <p>入力されたキーは{key}、正答数は{count}です。</p>
+          <p>
+            入力されたキーは{key}、正答数は{count}です。
+          </p>
         </BoxItem>
         <div>
-          {type.map((character, index) => (
-            index < count ? (
+          {type.map((character, index) => {
+            return index < count ? (
               <span className="text-green-500" key={index}>
                 {character}
               </span>
             ) : (
               <span key={index}>{character}</span>
-            )
-          ))}
+            );
+          })}
         </div>
       </MainBox>
     </Container>
