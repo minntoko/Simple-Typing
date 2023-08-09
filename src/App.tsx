@@ -1,10 +1,9 @@
-import './App.css'
+import KeyboardInputDetector from './components/Keyboard'
 
 function App() {
 
   return (
-    <>
-    </>
+    <KeyboardInputDetector />
   )
 }
 
