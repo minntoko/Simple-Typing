@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 const KeyboardInputDetector = () => {
   const [key, setKey] = useState("");
+  const [inCorrect, setInCorrect] = useState(false);
   const [count, setCount] = useState(0);
   const [type, setType] = useState<string[]>([]);
   const RANDOM_SENTENCE_URL_API = "https://api.quotable.io/random";
@@ -28,9 +29,14 @@ const KeyboardInputDetector = () => {
     NextSentence();
   }, []);
 
+  const correct = () => {
+    setCount(() => count + 1);
+    setInCorrect(false);
+  }
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      event.key == type[count] && setCount(() => count + 1);
+      event.key == type[count] ? correct() : setInCorrect(true);
       if (type.length - 1 == count) {
         NextSentence();
       }
@@ -63,7 +69,7 @@ const KeyboardInputDetector = () => {
                 {character}
               </span>
             ) : (
-              <span key={index}>{character}</span>
+              <span className={`${inCorrect && index == count && "text-red-500 underline"}`} key={index}>{character}</span>
             );
           })}
         </div>
