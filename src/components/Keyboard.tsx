@@ -10,6 +10,7 @@ const KeyboardInputDetector = () => {
     isFinish,
     inCorrect,
     key,
+    restartGame
   } = useTypingGameLogic();
 
   return (
@@ -24,7 +25,7 @@ const KeyboardInputDetector = () => {
           入力されたキーは{key}、正答数は{count}です。
           </p>
         </BoxItem>
-        <DisplayComponent isFinish={isFinish} inCorrect={inCorrect} type={type} count={count} />
+        <DisplayComponent isFinish={isFinish} inCorrect={inCorrect} type={type} count={count} restartGame={restartGame} />
       </MainBox>
     </Container>
   );

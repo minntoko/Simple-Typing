@@ -44,6 +44,9 @@ const useTypingGameLogic = () => {
   };
 
   const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key == "Shift") {
+      return;
+    }
     typeSound.play();
     typeSound.currentTime = 0;
     if (event.key === type[count]) {
@@ -71,7 +74,15 @@ const useTypingGameLogic = () => {
     };
   }, [type, count, isFinish]);
 
-  useEffect(() => {
+  const restartGame = () => {
+    setIsFinish(false);
+    setInCorrect(false);
+    nextSentence();
+    startTimer();
+    setTime(initialTime);
+  };
+
+  const startTimer = () => {
     const timer = setInterval(() => {
       setTime((prevTime) => {
         if (prevTime > 0) {
@@ -89,10 +100,11 @@ const useTypingGameLogic = () => {
     return () => {
       clearInterval(timer);
     };
-  }, []);
-
+  }
+  
   useEffect(() => {
     const start = async () => {
+      startTimer();
       const sentence = await getRandomSentence();
       setType(sentence);
       setCount(0);
@@ -107,6 +119,7 @@ const useTypingGameLogic = () => {
     isFinish,
     inCorrect,
     key,
+    restartGame
   };
 };
 
