@@ -4,7 +4,6 @@ import Container from "./layouts/Container";
 import MainBox from "./layouts/MainBox";
 
 const StartScreen = () => {
-
   return (
     <Container>
       <Header />

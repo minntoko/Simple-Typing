@@ -17,7 +17,7 @@ const useTypingGameLogic = () => {
   const navigate = useNavigate();
 
 
-  const finishNav = () => {
+  const toFinish = () => {
     if (isFinish) {
       navigate('/finish');
     }
@@ -83,12 +83,16 @@ const useTypingGameLogic = () => {
     };
   }, [type, count, isFinish]);
 
-  const restartGame = () => {
+  const gameStart = () => {
     setIsFinish(false);
     setInCorrect(false);
     nextSentence();
     startTimer();
     setTime(initialTime);
+  };
+
+  const gameRestart = () => {
+    gameStart();
     navigate("/game");
   };
 
@@ -111,16 +115,6 @@ const useTypingGameLogic = () => {
       clearInterval(timer);
     };
   }
-  
-  useEffect(() => {
-    const start = async () => {
-      startTimer();
-      const sentence = await getRandomSentence();
-      setType(sentence);
-      setCount(0);
-    };
-    start();
-  }, []);
 
   return {
     time,
@@ -129,8 +123,9 @@ const useTypingGameLogic = () => {
     isFinish,
     inCorrect,
     key,
-    finishNav,
-    restartGame,
+    toFinish,
+    gameStart,
+    gameRestart,
   };
 };
 

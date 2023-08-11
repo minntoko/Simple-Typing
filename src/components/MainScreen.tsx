@@ -3,6 +3,7 @@ import DisplayComponent from './layouts/DisplayComponent';
 import useTypingGameLogic from '../hooks/useTypingGameLogic';
 import Header from './layouts/Header';
 import Container from './layouts/Container';
+import { useEffect } from 'react';
 
 
 const MainScreen = () => {
@@ -13,17 +14,24 @@ const MainScreen = () => {
     isFinish,
     inCorrect,
     key,
-    finishNav
+    gameStart,
+    toFinish
   } = useTypingGameLogic();
 
-  finishNav();
+  useEffect(() => {
+    gameStart();
+  }, []);
+  
+  useEffect(() => {
+    toFinish();
+  }, [isFinish]);
   return (
     <Container>
       <Header />
       <MainBox className="drop-shadow-md">
         <BoxItem>
           <Timer>{time} 秒</Timer>
-          <p>
+          <p onClick={gameStart}>
           入力されたキーは{key}、正答数は{count}です。
           </p>
         </BoxItem>

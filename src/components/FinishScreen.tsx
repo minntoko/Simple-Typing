@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import useTypingGameLogic from "../hooks/useTypingGameLogic";
 import Container from "./layouts/Container";
 import MainBox from "./layouts/MainBox";
+import Header from "./layouts/Header";
 
 
 const Finish = () => {
-  const { restartGame } = useTypingGameLogic();
+  const { gameRestart } = useTypingGameLogic();
   return (
     <Container>
+      <Header />
       <MainBox>
         <div className="flex flex-col items-center justify-around h-32">
           <span className="text-3xl font-bold">終了</span>
@@ -16,7 +18,7 @@ const Finish = () => {
             <Link to="/">
               <Button>ホームへ</Button>
             </Link>
-            <Button onClick={restartGame}>もう一度</Button>
+            <Button onClick={gameRestart}>もう一度</Button>
           </div>
         </div>
       </MainBox>
