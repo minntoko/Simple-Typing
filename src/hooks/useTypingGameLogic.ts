@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const useTypingGameLogic = () => {
   const initialTime = 30;
@@ -13,6 +14,14 @@ const useTypingGameLogic = () => {
   const wrongSound = new Audio("./audio/wrong.mp3");
   const correctSound = new Audio("./audio/correct.mp3");
   const finishSound = new Audio("./audio/finish.mp3");
+  const navigate = useNavigate();
+
+
+  const finishNav = () => {
+    if (isFinish) {
+      navigate('/finish');
+    }
+  };
 
   const getRandomSentence = async () => {
     try {
@@ -80,6 +89,7 @@ const useTypingGameLogic = () => {
     nextSentence();
     startTimer();
     setTime(initialTime);
+    navigate("/game");
   };
 
   const startTimer = () => {
@@ -119,7 +129,8 @@ const useTypingGameLogic = () => {
     isFinish,
     inCorrect,
     key,
-    restartGame
+    finishNav,
+    restartGame,
   };
 };
 

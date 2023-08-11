@@ -1,8 +1,11 @@
-import styled from "styled-components";
-import DisplayComponent from "./DisplayComponent";
-import useTypingGameLogic from "../hooks/useTypingGameLogic";
+import styled from 'styled-components';
+import DisplayComponent from './layouts/DisplayComponent';
+import useTypingGameLogic from '../hooks/useTypingGameLogic';
+import Header from './layouts/Header';
+import Container from './layouts/Container';
 
-const KeyboardInputDetector = () => {
+
+const MainScreen = () => {
   const {
     time,
     count,
@@ -10,14 +13,13 @@ const KeyboardInputDetector = () => {
     isFinish,
     inCorrect,
     key,
-    restartGame
+    finishNav
   } = useTypingGameLogic();
 
+  finishNav();
   return (
     <Container>
-      <Header className="drop-shadow-md">
-        <h1 className="text-2xl font-bold">タイピングゲーム</h1>
-      </Header>
+      <Header />
       <MainBox className="drop-shadow-md">
         <BoxItem>
           <Timer>{time} 秒</Timer>
@@ -25,32 +27,11 @@ const KeyboardInputDetector = () => {
           入力されたキーは{key}、正答数は{count}です。
           </p>
         </BoxItem>
-        <DisplayComponent isFinish={isFinish} inCorrect={inCorrect} type={type} count={count} restartGame={restartGame} />
+        <DisplayComponent isFinish={isFinish} inCorrect={inCorrect} type={type} count={count} />
       </MainBox>
     </Container>
   );
 };
-
-const Container = styled.div`
-  width: 100%;
-  height: 100vh;
-  background: linear-gradient(to left top, #cbe9f4, #efefef);
-  font-family: "Poppins", sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Header = styled.header`
-  width: 100%;
-  padding: 10px;
-  position: fixed;
-  top: 0;
-  color: #fff;
-  text-shadow: 0px 0px 5px #aaa;
-  background-color: #72b8ff;
-  margin-bottom: 20px;
-`;
 
 const MainBox = styled.main`
   position: relative;
@@ -87,4 +68,4 @@ const Timer = styled.div`
 
 
 
-export default KeyboardInputDetector;
+export default MainScreen;
