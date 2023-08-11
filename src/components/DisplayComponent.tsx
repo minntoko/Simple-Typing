@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 interface Props {
@@ -26,14 +27,19 @@ const DisplayComponent = ({ isFinish, inCorrect, type, count, restartGame }: Pro
       ) : (
         <div className="flex flex-col items-center justify-around h-32">
           <span className="text-3xl font-bold">終了</span>
-          <RetryButton onClick={restartGame}>もう一度</RetryButton>
+          <div className="flex w-60 justify-between">
+            <Link to="/">
+              <Button>ホームへ</Button>
+            </Link>
+            <Button onClick={restartGame}>もう一度</Button>
+          </div>
         </div>
       )}
     </div>
   );
 };
 
-const RetryButton = styled.button`
+const Button = styled.button`
   color: #fff;
   background-color: #72b8ff;
   font-weight: bold;
