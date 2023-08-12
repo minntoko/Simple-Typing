@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from "recoil";
+import {finishState} from "../atoms/finishState";
 
 const useTypingGameLogic = () => {
   const initialTime = 30;
   const [time, setTime] = useState(initialTime);
   const [count, setCount] = useState(0);
   const [type, setType] = useState([]);
-  const [isFinish, setIsFinish] = useState(false);
+  const [isFinish, setIsFinish] = useRecoilState(finishState);
   const [inCorrect, setInCorrect] = useState(false);
   const [key, setKey] = useState("");
 
@@ -21,6 +23,11 @@ const useTypingGameLogic = () => {
     if (isFinish) {
       navigate('/finish');
     }
+  };
+
+  const toStart = () => {
+    navigate('/');
+    setIsFinish(false);
   };
 
   const getRandomSentence = useCallback(async () => {
@@ -124,9 +131,11 @@ const useTypingGameLogic = () => {
     isFinish,
     inCorrect,
     key,
+    toStart,
     toFinish,
     gameStart,
     gameRestart,
+    setIsFinish,
   };
 };
 

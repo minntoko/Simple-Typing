@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import useTypingGameLogic from "../hooks/useTypingGameLogic";
 import Container from "./layouts/Container";
 import MainBox from "./layouts/MainBox";
@@ -7,7 +6,8 @@ import Header from "./layouts/Header";
 
 
 const Finish = () => {
-  const { gameRestart } = useTypingGameLogic();
+  const { gameRestart, setIsFinish, toStart } = useTypingGameLogic();
+  setIsFinish(true);
   return (
     <Container>
       <Header />
@@ -15,9 +15,7 @@ const Finish = () => {
         <div className="flex flex-col items-center justify-around h-32">
           <span className="text-3xl font-bold">終了</span>
           <div className="flex w-60 justify-between">
-            <Link to="/">
-              <Button>ホームへ</Button>
-            </Link>
+            <Button onClick={toStart}>ホームへ</Button>
             <Button onClick={gameRestart}>もう一度</Button>
           </div>
         </div>

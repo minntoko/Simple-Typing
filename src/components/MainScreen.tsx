@@ -20,7 +20,7 @@ const MainScreen = () => {
 
   useEffect(() => {
     gameStart();
-  }, [gameStart]);
+  }, []);
   
   useEffect(() => {
     toFinish();
@@ -35,7 +35,7 @@ const MainScreen = () => {
           入力されたキーは{key}、正答数は{count}です。
           </p>
         </BoxItem>
-        <DisplayComponent isFinish={isFinish} inCorrect={inCorrect} type={type} count={count} />
+        <DisplayComponent inCorrect={inCorrect} type={type} count={count} />
       </MainBox>
     </Container>
   );

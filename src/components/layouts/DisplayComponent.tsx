@@ -1,5 +1,4 @@
 interface Props {
-  isFinish: boolean;
   inCorrect: boolean;
   type: string[];
   count: number;
