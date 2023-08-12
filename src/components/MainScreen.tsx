@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import DisplayComponent from './layouts/DisplayComponent';
 import useTypingGameLogic from '../hooks/useTypingGameLogic';
-import Header from './layouts/Header';
-import Container from './layouts/Container';
 import { useEffect } from 'react';
 
 
@@ -26,33 +24,17 @@ const MainScreen = () => {
     toFinish();
   }, [toFinish, isFinish]);
   return (
-    <Container>
-      <Header />
-      <MainBox className="drop-shadow-md">
-        <BoxItem>
-          <Timer>{time} 秒</Timer>
-          <p onClick={gameStart}>
-          入力されたキーは{key}、正答数は{count}です。
-          </p>
-        </BoxItem>
-        <DisplayComponent inCorrect={inCorrect} type={type} count={count} />
-      </MainBox>
-    </Container>
+    <>
+      <BoxItem>
+        <Timer>{time} 秒</Timer>
+        <p onClick={gameStart}>
+        入力されたキーは{key}、正答数は{count}です。
+        </p>
+      </BoxItem>
+      <DisplayComponent inCorrect={inCorrect} type={type} count={count} />
+    </>
   );
 };
-
-const MainBox = styled.main`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  width: 550px;
-  height: 400px;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 12px;
-`;
 
 const BoxItem = styled.div`
   position: absolute;
