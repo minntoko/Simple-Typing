@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
 const useTypingGameLogic = () => {
@@ -10,9 +10,9 @@ const useTypingGameLogic = () => {
   const [inCorrect, setInCorrect] = useState(false);
   const [key, setKey] = useState("");
 
-  const typeSound = new Audio("./audio/typing-sound.m4a");
-  const wrongSound = new Audio("./audio/wrong.mp3");
-  const correctSound = new Audio("./audio/correct.mp3");
+  const typeSound = useMemo(() => new Audio("./audio/typing-sound.m4a"), []);
+  const wrongSound = useMemo(() => new Audio("./audio/wrong.mp3"), []);
+  const correctSound = useMemo(() => new Audio("./audio/correct.mp3"), []);
   const finishSound = new Audio("./audio/finish.mp3");
   const navigate = useNavigate();
 
@@ -23,7 +23,7 @@ const useTypingGameLogic = () => {
     }
   };
 
-  const getRandomSentence = async () => {
+  const getRandomSentence = useCallback(async () => {
     try {
       const response = await fetch("https://api.quotable.io/random");
       const data = await response.json();
@@ -32,27 +32,28 @@ const useTypingGameLogic = () => {
       console.error("An error occurred:", error);
       return [];
     }
-  };
+  }, []);
 
-  const nextSentence = async () => {
+  const nextSentence = useCallback(async () => {
     const sentence = await getRandomSentence();
     setType(sentence);
     setCount(0);
-  };
+  }, [getRandomSentence]);
+  
 
   const correct = () => {
     setCount((prevCount) => prevCount + 1);
     setInCorrect(false);
   };
 
-  const typeIncorrect = () => {
+  const typeIncorrect = useCallback(() => {
     setInCorrect(true);
     wrongSound.volume = 0.3;
     wrongSound.play();
     wrongSound.currentTime = 0;
-  };
+  }, [wrongSound]);
 
-  const handleKeyDown = (event: KeyboardEvent) => {
+  const handleKeyDown = useCallback((event: KeyboardEvent) => {
     if (event.key == "Shift") {
       return;
     }
@@ -71,7 +72,7 @@ const useTypingGameLogic = () => {
     }
 
     setKey(event.key);
-  };
+  }, [count, type, nextSentence, typeIncorrect, typeSound, correctSound]);
 
   useEffect(() => {
     if (!isFinish) {
@@ -81,7 +82,7 @@ const useTypingGameLogic = () => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [type, count, isFinish]);
+  }, [type, count, isFinish, handleKeyDown]);
 
   const gameStart = () => {
     setIsFinish(false);

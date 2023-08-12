@@ -20,11 +20,11 @@ const MainScreen = () => {
 
   useEffect(() => {
     gameStart();
-  }, []);
+  }, [gameStart]);
   
   useEffect(() => {
     toFinish();
-  }, [isFinish]);
+  }, [toFinish, isFinish]);
   return (
     <Container>
       <Header />
